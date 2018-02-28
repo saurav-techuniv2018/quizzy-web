@@ -12,7 +12,7 @@ class LeaderBoard extends React.Component {
   componentDidMount = () => {
     const headers = new Headers();
     headers.append('Content-Type', 'application/json');
-    fetch('/api/users/login', {
+    fetch('/api/users/score', {
       method: 'POST',
       body: JSON.stringify({
         userName: this.props.userName,
@@ -30,10 +30,7 @@ class LeaderBoard extends React.Component {
       .then(score => Promise.all([
         score,
         fetch('/api/users/top/5', {
-          method: 'POST',
-          body: JSON.stringify({
-            userName: this.props.userName,
-          }),
+          method: 'GET',
           headers,
         })
           .then(response => response.text())
@@ -43,7 +40,7 @@ class LeaderBoard extends React.Component {
           ...this.state,
           score: scoreResponse.score,
           total: scoreResponse.total,
-          topUsers,
+          topUsers: topUsers.data,
         });
       });
   }
@@ -53,11 +50,21 @@ class LeaderBoard extends React.Component {
       {
         this.state.score ?
           (
-            <div >
-              {this.state.score}/{this.state.total}
+            <div>
+              <div>Your score</div>
+              <div><span>{this.state.score}</span>/<span>{this.state.total}</span></div>
+
+
+              {this.state.topUsers.map(user => (
+                <div key={`leaderboard-${user.userName}`}>
+                  <div>{user.userName}</div>
+                  <div>{user.score}</div>
+                </div>
+              ))}
             </div>
           )
-          : (
+          :
+          (
             <div />
           )
       }
