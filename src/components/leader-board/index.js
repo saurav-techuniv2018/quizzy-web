@@ -54,7 +54,7 @@ class LeaderBoard extends React.Component {
 
 
               {this.state.topUsers.map(user => (
-                <div key={uuid()}>
+                <div >
                   <div>{user.userName}</div>
                   <div>{user.score}</div>
                 </div>

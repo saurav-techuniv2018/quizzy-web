@@ -6,7 +6,7 @@ const Question = props => (
     <div>{`Question ${props.number}`}</div>
     <div>{props.question.question}</div>
     {props.question.options.map(option => (
-      <div key={uuid()}>
+      <div>
         <input
           type="radio"
           name={`question-${props.number}`}
