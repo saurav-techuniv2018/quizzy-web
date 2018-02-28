@@ -1,12 +1,10 @@
 import React from 'react';
+import uuid from 'uuid/v1';
 
 class LeaderBoard extends React.Component {
   constructor(props) {
     super(props);
-
-    this.state = {
-      score: undefined,
-    };
+    this.state = {};
   }
 
   componentDidMount = () => {
@@ -56,11 +54,12 @@ class LeaderBoard extends React.Component {
 
 
               {this.state.topUsers.map(user => (
-                <div key={`leaderboard-${user.userName}`}>
+                <div key={uuid()}>
                   <div>{user.userName}</div>
                   <div>{user.score}</div>
                 </div>
               ))}
+              <button onClick={() => this.props.onPlayAgainButtonClick()}>Play Again</button>
             </div>
           )
           :

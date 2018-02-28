@@ -1,4 +1,5 @@
 import React from 'react';
+import uuid from 'uuid/v1';
 
 import Question from '../question';
 
@@ -7,7 +8,7 @@ const Quiz = props => (
     {props.questions.map((question, index) => (
       <Question
         question={question}
-        key={question.id}
+        key={uuid()}
         number={index + 1}
         onOptionClick={(questionId, selectedAnswer) =>
           props.onOptionClick(questionId, selectedAnswer)}

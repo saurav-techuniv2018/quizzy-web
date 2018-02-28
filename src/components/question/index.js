@@ -1,16 +1,17 @@
 import React from 'react';
+import uuid from 'uuid/v1';
 
 const Question = props => (
   <div>
     <div>{`Question ${props.number}`}</div>
     <div>{props.question.question}</div>
     {props.question.options.map(option => (
-      <div key={`${props.question.id}`}>
+      <div key={uuid()}>
         <input
           type="radio"
           name={`question-${props.number}`}
-          value={option}
-          onClick={() => { props.onOptionClick(props.question.id, option); }}
+          defaultChecked={option === props.question.selectedAnswer}
+          onClick={() => props.onOptionClick(props.question.id, option)}
         /> <span>{option}</span>
       </div>
     ))}

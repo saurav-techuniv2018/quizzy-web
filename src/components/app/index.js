@@ -16,7 +16,7 @@ class App extends React.Component {
   });
 
   static mapDispatchToProps = dispatch => ({
-    onLogin: (userName) => {
+    onLogin: (userName, context) => {
       const headers = new Headers();
       headers.append('Content-Type', 'application/json');
       fetch('/api/users/login', {
@@ -31,12 +31,19 @@ class App extends React.Component {
         .then((body) => {
           if (body.statusCode === 200) {
             dispatch(actionGenerator(actions.SWITCH_PAGE, pages.QUIZ));
-            return loadQuestions();
+            return loadQuestions(userName);
           }
           return [];
         })
         .then((questions) => {
-          dispatch(actionGenerator(actions.SET_QUESTIONS, questions));
+          const answered = questions.filter(q => q.selectedAnswer !== undefined);
+          context.setState({
+            ...context.state,
+            calculateEnabled: answered.length === questions.length,
+            answered: answered.map(a => a.id),
+          }, () => {
+            dispatch(actionGenerator(actions.SET_QUESTIONS, questions));
+          });
         });
     },
     onOptionClick: (questionId, selectedAnswer, context) => {
@@ -70,6 +77,14 @@ class App extends React.Component {
     onCalculateButtonClick: () => {
       dispatch(actionGenerator(actions.SWITCH_PAGE, pages.LEADER_BOARD));
     },
+    onPlayAgainButtonClick: (context) => {
+      dispatch(actionGenerator(actions.SWITCH_PAGE, pages.LOGIN));
+      context.setState({
+        userName: '',
+        answered: [],
+        calculateEnabled: false,
+      });
+    },
   })
 
   constructor(props) {
@@ -92,7 +107,7 @@ class App extends React.Component {
               ...prevState,
               userName: value,
             }))}
-            onSubmit={() => this.props.onLogin(this.state.userName)}
+            onSubmit={() => this.props.onLogin(this.state.userName, this)}
           />);
       case pages.QUIZ:
         return (
@@ -105,7 +120,11 @@ class App extends React.Component {
           />
         );
       case pages.LEADER_BOARD:
-        return (<LeaderBoard userName={this.state.userName} />);
+        return (
+          <LeaderBoard
+            userName={this.state.userName}
+            onPlayAgainButtonClick={() => this.props.onPlayAgainButtonClick(this)}
+          />);
       default:
         return (<div>Quizzy Web!</div>);
     }
