@@ -9,6 +9,8 @@ import Login from '../login';
 import Quiz from '../quiz';
 import LeaderBoard from '../leader-board';
 
+import './global.css';
+
 class App extends React.Component {
   static mapStateToProps = state => ({
     page: state.navigation.page,
@@ -130,7 +132,11 @@ class App extends React.Component {
     }
   }
 
-  render = () => this.renderCurrentPage();
+  render = () => (
+    <div className="App">
+      {this.renderCurrentPage()}
+    </div>
+  )
 }
 
 export default connect(App.mapStateToProps, App.mapDispatchToProps)(App);

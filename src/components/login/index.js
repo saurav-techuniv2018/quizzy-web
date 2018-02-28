@@ -5,22 +5,26 @@ import TitleBar from '../title-bar';
 import Form from '../form';
 import Welcome from '../welcome';
 
+import * as styles from './login.style';
+
 const Login = props => (
-  <div>
+  <div style={styles.container}>
     <TitleBar
       brand="Quizzy"
     />
 
-    <Welcome message="Quizzy!" />
+    <div style={styles.loginForm}>
+      <Welcome message="Quizzy!" />
 
-    <Form
-      header="Login"
-      label="Username"
-      userName={props.userName}
-      onUserNameChanged={e => props.onUserNameChanged(e)}
-      onSubmit={args => props.onSubmit(args)}
-      submitLabel="Login"
-    />
+      <Form
+        header="Login"
+        label="Username"
+        userName={props.userName}
+        onUserNameChanged={e => props.onUserNameChanged(e)}
+        onSubmit={args => props.onSubmit(args)}
+        submitLabel="Login"
+      />
+    </div>
   </div>
 );
 

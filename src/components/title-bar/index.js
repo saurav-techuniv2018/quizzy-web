@@ -1,8 +1,10 @@
 import React from 'react';
 import { PropTypes } from 'prop-types';
 
+import * as styles from './title-bar.style';
+
 const TitleBar = props => (
-  <div>
+  <div style={styles.titleBar}>
     <div>{props.brand}</div>
     <div>{props.message}</div>
   </div>
