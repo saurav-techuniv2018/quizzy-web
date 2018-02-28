@@ -1,10 +1,14 @@
 import React from 'react';
-import uuid from 'uuid/v1';
 
 import Question from '../question';
+import TitleBar from '../title-bar';
 
 const Quiz = props => (
   <div>
+    <TitleBar
+      brand="Quizzy"
+      message={`Hello ${props.userName}`}
+    />
     {props.questions.map((question, index) => (
       <Question
         question={question}

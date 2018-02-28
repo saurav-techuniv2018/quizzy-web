@@ -4,9 +4,9 @@ import { PropTypes } from 'prop-types';
 import * as styles from './title-bar.style';
 
 const TitleBar = props => (
-  <div style={styles.titleBar}>
+  <div style={styles.container}>
     <div>{props.brand}</div>
-    <div>{props.message}</div>
+    <div style={styles.message}>{props.message}</div>
   </div>
 );
 

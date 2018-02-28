@@ -114,6 +114,7 @@ class App extends React.Component {
       case pages.QUIZ:
         return (
           <Quiz
+            userName={this.state.userName}
             questions={this.props.questions}
             onOptionClick={(questionId, selectedAnswer) =>
               this.props.onOptionClick(questionId, selectedAnswer, this)}
