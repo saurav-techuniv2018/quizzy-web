@@ -1,5 +1,8 @@
 import React from 'react';
-import uuid from 'uuid/v1';
+
+import * as styles from './leader-board.style';
+import * as globalStyles from '../../lib/global.style';
+import TitleBar from '../title-bar';
 
 class LeaderBoard extends React.Component {
   constructor(props) {
@@ -34,32 +37,76 @@ class LeaderBoard extends React.Component {
           .then(response => response.text())
           .then(jsonString => JSON.parse(jsonString))]))
       .then(([scoreResponse, topUsers]) => {
+        const orderedTopUsers = topUsers.data.sort((userA, userB) =>
+          userA.score < userB.score);
+
         this.setState({
           ...this.state,
           score: scoreResponse.score,
           total: scoreResponse.total,
-          topUsers: topUsers.data,
+          topUsers: orderedTopUsers,
         });
       });
   }
 
   render = () => (
-    <div>
+    <div style={styles.container}>
+      <TitleBar
+        brand="Quizzy"
+        message={`Hello ${this.props.userName}`}
+      />
       {
         this.state.score ?
           (
             <div>
-              <div>Your score</div>
-              <div><span>{this.state.score}</span>/<span>{this.state.total}</span></div>
+              <div style={styles.yourScore}>Your Score</div>
+              <div style={styles.scoreContainer}>
+                <span style={styles.scoreNumerator}>{this.state.score}</span>
+                <span style={styles.scoreDivider}>/</span>
+                <span style={styles.scoreDenominator}>{this.state.total}</span>
+              </div>
 
-
-              {this.state.topUsers.map(user => (
-                <div >
-                  <div>{user.userName}</div>
-                  <div>{user.score}</div>
-                </div>
-              ))}
-              <button onClick={() => this.props.onPlayAgainButtonClick()}>Play Again</button>
+              <div style={styles.leaderBoardContainer}>
+                {this.state.topUsers.map((user, index) => (
+                  <div
+                    style={
+                      (user.userName === this.props.userName) ?
+                        {
+                          ...styles.topUser,
+                          backgroundColor: '#8FB4F6',
+                        }
+                        :
+                        styles.topUser}
+                  >
+                    <div style={{
+                      ...globalStyles.fonts,
+                      fontSize: '32px',
+                    }}
+                    >{index + 1}.
+                    </div>
+                    <div style={{
+                      ...globalStyles.fonts,
+                      fontSize: '32px',
+                      color: 'white',
+                      marginLeft: '8px',
+                    }}
+                    >{user.userName}
+                    </div>
+                    <div style={styles.topUserScore} > {user.score}</div>
+                  </div>
+                ))}
+              </div>
+              <div style={{
+                display: 'flex',
+                flexDirection: 'column',
+              }}
+              >
+                <button
+                  style={styles.playAgainButton}
+                  onClick={() => this.props.onPlayAgainButtonClick()}
+                >Play Again
+                </button>
+              </div>
             </div>
           )
           :

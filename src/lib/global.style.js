@@ -6,6 +6,8 @@ export const fonts = {
 export const colors = {
   main: '#39BAF2',
   secondary: '#FFF',
+  highlight: '#F17F06',
+  hightlight2: '#16AFE0',
 };
 
 export const quizButton = {
