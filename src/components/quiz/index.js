@@ -4,9 +4,10 @@ import Question from '../question';
 import TitleBar from '../title-bar';
 
 import * as styles from './quiz.style';
+import * as globalStyles from '../../lib/global.style';
 
 const Quiz = props => (
-  <div>
+  <div style={styles.container}>
     <TitleBar
       brand="Quizzy"
       message={`Hello ${props.userName}`}
@@ -22,6 +23,10 @@ const Quiz = props => (
       ))}
     </div>
     <button
+      style={{
+        ...globalStyles.quizButton,
+        ...styles.calculateButton,
+      }}
       disabled={!props.calculateEnabled}
       onClick={() => props.onCalculateButtonClick()}
     >Calculate
