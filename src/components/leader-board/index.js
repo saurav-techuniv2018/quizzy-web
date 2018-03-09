@@ -67,6 +67,7 @@ class LeaderBoard extends React.Component {
               </div>
 
               <div style={styles.leaderBoardContainer}>
+                <div style={styles.leaderBoardHeading}>Leaderboard</div>
                 {this.state.topUsers.map((user, index) => (
                   <div
                     style={

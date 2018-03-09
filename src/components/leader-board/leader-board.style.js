@@ -64,3 +64,10 @@ export const playAgainButton = {
   ...quizButton,
 };
 
+export const leaderBoardHeading = {
+  alignSelf: 'center',
+  fontFamily: 'Helvetica Neue',
+  fontStretch: 'condensed',
+  fontSize: '28px',
+};
+
